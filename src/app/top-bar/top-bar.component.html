@@ -14,7 +14,13 @@
   </nav>
   <mat-slide-toggle (toggleChange)="toggleBackground()" color="#3f51b5">Change Theme</mat-slide-toggle>
   <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
-  
+  <p>
+    @for (item of this.appData; track $index) {
+      {{item.busStopDuration}}
+      {{item.propertyName}}
+      {{item.propertyAddress}}
+    }
+  </p>
   <!-- <button mat-raised-button class="example-action-button" (click)="toggleBackground()">
     Toggle background
   </button>

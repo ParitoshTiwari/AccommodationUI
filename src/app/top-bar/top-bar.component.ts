@@ -5,7 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { RestApiServiceService } from '../rest-api-service.service';
-import { Router } from '@angular/router';
+import { allProperties } from '../../models/allProperties';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-top-bar',
@@ -14,22 +15,21 @@ import { Router } from '@angular/router';
   templateUrl: './top-bar.component.html',
   styleUrl: './top-bar.component.css'
 })
-export class TopBarComponent{
-  
-  /**
-   *
-   */
-  constructor(private service: RestApiServiceService, private router: Router) {
+export class TopBarComponent implements OnInit{
+  appData: allProperties[] = [];
+  ngOnInit(): void {
     
   }
+
+  constructor(private service: RestApiServiceService){}
 
   links = ['All Properties', 'Giveaways', 'Events'];
   activeLink = this.links[0];
   background: ThemePalette = 'warn';
 
   toggleBackground() {
-    ///this.saveBlog();
     this.background = this.background != 'warn' ? 'warn' : 'primary';
+    this.saveBlog();
   }
 
   addLink() {
@@ -37,13 +37,8 @@ export class TopBarComponent{
   }
 
   saveBlog() {
-    let blog = "";
-    ///this.service.postBlog(blog);
-    // this.service.postBlog(blog).subscribe({
-    //   error: (err) => { console.error(err) },
-    //   complete: () => { this.router.navigate(['viewblogs']) }
-    // });
     console.log("In the savelog method");
-    this.background = 'primary';
+    this.service.postBlog().subscribe((appDatas : allProperties[]) => { this.appData = appDatas });
+    console.log(this.appData);
   }
 }
