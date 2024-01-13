@@ -21,7 +21,10 @@ export class TopBarComponent implements OnInit{
     
   }
 
-  constructor(private service: RestApiServiceService){}
+  constructor(private service: RestApiServiceService){
+    service.postBlog().subscribe((appDatas : allProperties[]) => { this.appData = appDatas });
+    console.log(this.appData);
+  }
 
   links = ['All Properties', 'Giveaways', 'Events'];
   activeLink = this.links[0];
